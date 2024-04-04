@@ -207,9 +207,6 @@
       lldb
       rustc
       cargo
-      cargo-watch
-      clippy
-      bacon
       rust-analyzer
       ncspot
       xwaylandvideobridge
