@@ -4,7 +4,7 @@
 
 
 let
-  nvidia-offload = writeShellScriptBin "nvidia-offload" ''
+  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
     export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
     export __GLX_VENDOR_LIBRARY_NAME=nvidia
@@ -18,11 +18,11 @@ in
     nvidia.enable = lib.mkEnableOption "enables Nvidia" ; 
     
   };
-  nvidia.enable = lib.mkDefault true; # Enabled by default
+  # nvidia.enable = lib.mkDefault true; # Enabled by default
 
   ###### implementation
   config = lib.mkIf config.nvidia.enable {
-    environment.systemPackages = nvidia-offload;
+    environment.systemPackages = [nvidia-offload];# Make sure this is a list
 
     hardware.nvidia = {
       modesetting.enable = true;
@@ -45,4 +45,4 @@ in
       };
     };
   };
-};
+}
