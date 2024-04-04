@@ -15,10 +15,10 @@ in
 {
    ###### interface
   options = {
-    nvidia.enable = lib.mkEnableOption "enables Blueman" ; 
+    nvidia.enable = lib.mkEnableOption "enables Nvidia" ; 
     
   };
-  nvidia.enable = lib.mkDefault true;
+  nvidia.enable = lib.mkDefault true; # Enabled by default
 
   ###### implementation
   config = lib.mkIf config.nvidia.enable {
