@@ -158,9 +158,15 @@
 
       # C++
       gcc
+      usbutils
+      clion
 
       # Python
       python310
+
+      # Java
+      jdk21_headless
+      jetbrains.idea-ultimate
 
       # Editors
       vim 
