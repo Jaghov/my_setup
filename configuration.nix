@@ -159,7 +159,7 @@
       # C++
       gcc
       usbutils
-      clion
+      jetbrains.clion
 
       # Python
       python310
