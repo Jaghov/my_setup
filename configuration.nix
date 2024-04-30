@@ -181,6 +181,7 @@
       libnotify
       kitty
       rofi-wayland
+      rofi-screenshot
       dolphin
 
       #System utilities
