@@ -84,6 +84,23 @@
   #programs.nix-ld.libraries = with pkgs; [
     
   #];
+  
+  systemd.user.services.plasma-dolphin = {
+    unitConfig = {
+        Description = "Dolphin file manager";
+        PartOf = [ "graphical-session.target" ];
+    };
+    path = [ "/run/current-system/sw" ];
+    environment = {
+        # don't add this if you are not wayland
+        QT_QPA_PLATFORM = "wayland";
+    };
+    serviceConfig = {
+        Type = "dbus";
+        BusName = "org.freedesktop.FileManager1";
+        ExecStart = "${pkgs.dolphin}/bin/dolphin";
+    };
+};
 
   # Enable bluetooth
   hardware.bluetooth.enable = true;
@@ -129,6 +146,7 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       firefox
+      tor-browser
     #  thunderbird
     ];
   };
@@ -163,6 +181,7 @@
 
       # Python
       python310
+      vscode
 
       # Java
       jdk21_headless
@@ -210,6 +229,7 @@
       qbittorrent
 
       obsidian
+      zotero
       # Rust
       lldb
       rustc
