@@ -121,20 +121,24 @@
 
   # Enable sound with pipewire.
   sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
+  hardware.pulseaudio = {
     enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
+    support32Bit = true;
+  };
+  # hardware.pulseaudio.enable = false;
+  # security.rtkit.enable = true;
+  # services.pipewire = {
+  #   enable = true;
+  #   alsa.enable = true;
+  #   alsa.support32Bit = true;
+  #   pulse.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
-  };
+  # };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -207,6 +211,7 @@
       networkmanagerapplet
       pavucontrol
       blueman
+      
     
       # Dev tooling
       nushell
@@ -216,15 +221,8 @@
 
       # Leisure
       mpv
-
-      (pkgs.makeDesktopItem {
-    name = "discord";
-    exec =
-      "env -u NIXOS_OZONE_WL ${pkgs.discord}/bin/discord --use-gl=desktop";
-    desktopName = "Discord";
-    icon =
-      "${pkgs.tela-circle-icon-theme}/share/icons/Tela-circle/scalable/apps/discord.svg"; })
-      # discord
+      teams-for-linux
+      vesktop
       steam
       qbittorrent
 
@@ -249,6 +247,7 @@
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
+    portalPackage = pkgs.xdg-desktop-portal-hyprland;
     # enableNvidiaPatches = true;
   };
 
