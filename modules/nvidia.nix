@@ -16,7 +16,7 @@ in
    ###### interface
   options = {
     nvidia.enable = lib.mkEnableOption "enables Nvidia" ; 
-    
+    cuda.enable = true;
   };
   # nvidia.enable = lib.mkDefault true; # Enabled by default
 
@@ -24,24 +24,26 @@ in
   config = lib.mkIf config.nvidia.enable {
     environment.systemPackages = [nvidia-offload];# Make sure this is a list
 
-    hardware.nvidia = {
-      modesetting.enable = true;
+    hardware = {
+      nvidia = {
+        modesetting.enable = true;
 
-      powerManagement.enable = false;
+        powerManagement.enable = false;
 
-      powerManagement.finegrained = false;
+        powerManagement.finegrained = false;
 
-      open = false;
+        open = false;
 
-      nvidiaSettings = true;
+        nvidiaSettings = true;
 
     
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
+        package = config.boot.kernelPackages.nvidiaPackages.stable;
 
-      prime = {
-        offload.enable = true;
-        intelBusId     = "PCI:12:0:0"; 
-        nvidiaBusId    = "PCI:1:0:0";
+        # prime = {
+        #   offload.enable = true;
+        #   intelBusId     = "PCI:12:0:0"; 
+        #   nvidiaBusId    = "PCI:1:0:0";
+        # };
       };
     };
   };
