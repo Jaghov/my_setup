@@ -204,7 +204,6 @@
       libnotify
       kitty
       rofi-wayland
-      rofi-screenshot
       dolphin
 
       #System utilities
@@ -225,6 +224,17 @@
       vesktop
       steam
       qbittorrent
+
+      # images
+      gimp
+      grimblast #screenshots
+      swappy
+
+      # video/image codecs
+      ffmpeg_7-full
+      libva
+      libva-utils
+      
 
       obsidian
       zotero
@@ -258,10 +268,10 @@
     NIXOS_OZONE_WL = "1";
   };
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
+  environment.variables = rec {
+    GRIMBLAST_EDITOR = "/run/current-system/sw/bin/swappy -f";
   };
+
 
   # services.xserver.videoDrivers = ["nvidia"];
 

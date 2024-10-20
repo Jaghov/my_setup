@@ -16,7 +16,6 @@ in
    ###### interface
   options = {
     nvidia.enable = lib.mkEnableOption "enables Nvidia" ; 
-    cuda.enable = true;
   };
   # nvidia.enable = lib.mkDefault true; # Enabled by default
 
