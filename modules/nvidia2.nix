@@ -23,12 +23,12 @@
       # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
       # of just the bare essentials.
       powerManagement.enable = false;
-      # prime= {
-      #   offload.enable = true;
-      #   nvidiaBusId = "PCI:01:00:0";
-      #   amdgpuBusId = "PCI:12:0:0";
-      #   # sync.enable = true;
-      # };
+      prime= {
+        offload.enable = true;
+        nvidiaBusId = "PCI:01:00:0";
+        amdgpuBusId = "PCI:12:0:0";
+        # sync.enable = true;
+      };
 
       # Fine-grained power management. Turns off GPU when not in use.
       # Experimental and only works on modern Nvidia GPUs (Turing or newer).
@@ -51,7 +51,7 @@
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
     # boot.blacklistedKernelModules = [ "amdgpu" "radeon" ];
-    boot.kernelParams = ["nvidia.NVreg_PreserveVideoMemoryAllocations=1"];
+    # boot.kernelParams = ["nvidia.NVreg_PreserveVideoMemoryAllocations=1"];
     environment.variables = {
       GBM_BACKEND = "nvidia-drm";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
@@ -59,7 +59,9 @@
       LIBVA_DRIVER_NAME = "nvidia";
       NVD_BACKEND="direct";
       EGL_PLATFORM = "wayland";
-      NVD_GPU="0";
+      NVD_GPU="/dev/dri/renderD128"; # Sets nvidi gpu to use vaapi driver on system
+      MOZ_DRM_DEVICE="/dev/dri/renderD128"; # Sets nvidia gpu to use vaapi driver on firefox
+      MOZ_ENABLE_WAYLAND="1"; # Use wayland
     };
     hardware.graphics = {
       enable = true;

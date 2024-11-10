@@ -3,6 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+
     # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # home-manager = {
@@ -28,9 +30,11 @@
   in
   {
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-      specialArgs = {inherit inputs;  }; #inherit pkgs-unstable;
+      specialArgs = {inherit inputs; inherit system;  }; #inherit pkgs-unstable;
       modules = [
         ./configuration.nix
+        {nixpkgs.overlays = [inputs.hyprpanel.overlay];}
+
         # inputs.home-manager.nixosModules.default
       ];
     };

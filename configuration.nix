@@ -33,7 +33,8 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "Europe/London";
+  # time.timeZone = "Europe/London";
+  time.timeZone = "Africa/Lagos";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
@@ -113,14 +114,14 @@
   };
   programs.xwayland.enable = true;
 
+  # Bluetooth manager
   services.blueman.enable = true;
 
   # Handles desktop interactions
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
-  # # Enable sound with pipewire.
-  # sound.enable = true;
+  # Enable sound with pipewire.
   # hardware.pulseaudio = {
   #   enable = true;
   #   support32Bit = true;
@@ -133,7 +134,7 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
@@ -150,8 +151,14 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       firefox
+      # firefox-wayland
       tor-browser
+      google-chrome
     #  thunderbird
+
+      libreoffice-qt6-fresh
+      hunspell
+      hunspellDicts.en_GB-ise
     ];
   };
 
@@ -200,11 +207,12 @@
         mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
       })
       )
-      dunst
-      libnotify
+      # dunst #notification service
+      # libnotify
       kitty
       rofi-wayland
       dolphin
+      hyprpanel
 
       #System utilities
       networkmanagerapplet
@@ -227,6 +235,7 @@
 
       # images
       gimp
+      qimgv
       grimblast #screenshots
       swappy
 
@@ -234,6 +243,9 @@
       ffmpeg_7-full
       libva
       libva-utils
+
+      # Image manipulation
+      rerun
       
 
       obsidian
@@ -242,15 +254,25 @@
       lldb
       rustc
       cargo
+      
+      cargo-modules
+      clippy
       rust-analyzer
       ncspot
       xwaylandvideobridge
       hyprland
       xdg-desktop-portal-hyprland
       unzip
+
+
+      hydra-check
     ])
     
     ;
+    fonts.packages = with pkgs; [
+      nerdfonts
+    ];
+    fonts.fontDir.enable = true;
   
 
   # Enabling hyprland on Nixos
@@ -260,16 +282,18 @@
     portalPackage = pkgs.xdg-desktop-portal-hyprland;
     # enableNvidiaPatches = true;
   };
-
   environment.sessionVariables = {
     # If cursor becomes invisible
     WLR_NO_HARDWARE_CURSORS = "1";
     # Hint electron apps to use wayland
     NIXOS_OZONE_WL = "1";
+    MOZ_ENABLE_WAYLAND="1";
+    GSK_RENDERER="ngl";
   };
 
   environment.variables = rec {
     GRIMBLAST_EDITOR = "/run/current-system/sw/bin/swappy -f";
+    
   };
 
 
@@ -304,7 +328,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
   
 
 }
