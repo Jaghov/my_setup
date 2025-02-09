@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    # hyprland-qtutils.url = "github:hyprwm/hyprland-qtutils";
 
     # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
@@ -33,7 +34,7 @@
       specialArgs = {inherit inputs; inherit system;  }; #inherit pkgs-unstable;
       modules = [
         ./configuration.nix
-        {nixpkgs.overlays = [inputs.hyprpanel.overlay];}
+        {nixpkgs.overlays = [inputs.hyprpanel.overlay ];}
 
         # inputs.home-manager.nixosModules.default
       ];

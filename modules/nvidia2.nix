@@ -61,7 +61,6 @@
       EGL_PLATFORM = "wayland";
       NVD_GPU="/dev/dri/renderD128"; # Sets nvidi gpu to use vaapi driver on system
       MOZ_DRM_DEVICE="/dev/dri/renderD128"; # Sets nvidia gpu to use vaapi driver on firefox
-      MOZ_ENABLE_WAYLAND="1"; # Use wayland
     };
     hardware.graphics = {
       enable = true;
@@ -69,6 +68,7 @@
       extraPackages = with pkgs; [
         vaapiVdpau
         libvdpau-va-gl
+        libva-vdpau-driver
         nvidia-vaapi-driver # Fix for firefox hardware acceleration with nvidia
         
       ];

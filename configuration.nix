@@ -20,7 +20,16 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes"];
 
-  
+# boot.kernelPatches = [
+#   {
+#     name = "amdgpu-ignore-ctx-privileges";
+#     patch = pkgs.fetchpatch {
+#       name = "cap_sys_nice_begone.patch";
+#       url = "https://github.com/Frogging-Family/community-patches/raw/master/linux61-tkg/cap_sys_nice_begone.mypatch";
+#       hash = "sha256-Y3a0+x2xvHsfLax/uwycdJf3xLxvVfkfDVqjkxNaYEo=";
+#     };
+#   }
+# ];  
   
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -112,14 +121,30 @@
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
   };
+  programs.alvr.enable = true;
+  programs.alvr.openFirewall = true;
+
   programs.xwayland.enable = true;
 
   # Bluetooth manager
   services.blueman.enable = true;
 
-  # Handles desktop interactions
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+ # Handles desktop interactions
+  xdg = {
+    portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+      config = {
+        common.default = ["hyprland"];
+        hyprland.default = ["gtk" "hyprland"];
+      };
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+        pkgs.xdg-desktop-portal-hyprland
+      ];
+    };
+  };
+
 
   # Enable sound with pipewire.
   # hardware.pulseaudio = {
@@ -127,7 +152,7 @@
   #   support32Bit = true;
   # };
   # hardware.pulseaudio.enable = false;
-  # security.rtkit.enable = true;
+  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -175,7 +200,7 @@
   # nixpkgs-unstable.config.allowUnfree = true;
   nvidia.enable = true;
   noisetorch.enable = true;
-
+  # hardware.opentabletdriver.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -183,7 +208,7 @@
     (with pkgs; [
       wget
       git
-      
+      zip 
 
       # C++
       gcc
@@ -202,17 +227,13 @@
       vim 
       helix
 
-      # Window Managers
-      (waybar.overrideAttrs (oldAttrs: {
-        mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-      })
-      )
       # dunst #notification service
       # libnotify
       kitty
       rofi-wayland
       dolphin
       hyprpanel
+      hyprland-qtutils
 
       #System utilities
       networkmanagerapplet
@@ -229,8 +250,14 @@
       # Leisure
       mpv
       teams-for-linux
+      # (discord.override {
+      #   # withOpenASAR = true; # can do this here too
+      #   withVencord = true;
+      # })
       vesktop
       steam
+      itch
+      alvr
       qbittorrent
 
       # images
@@ -238,6 +265,11 @@
       qimgv
       grimblast #screenshots
       swappy
+
+      testdisk
+
+      # Blender
+      blender
 
       # video/image codecs
       ffmpeg_7-full
@@ -254,6 +286,7 @@
       lldb
       rustc
       cargo
+      rustfmt
       
       cargo-modules
       clippy
@@ -266,15 +299,15 @@
 
 
       hydra-check
+      vdpauinfo
     ])
     
     ;
     fonts.packages = with pkgs; [
-      nerdfonts
+      nerd-fonts.jetbrains-mono
     ];
     fonts.fontDir.enable = true;
   
-
   # Enabling hyprland on Nixos
   programs.hyprland = {
     enable = true;
@@ -289,6 +322,7 @@
     NIXOS_OZONE_WL = "1";
     MOZ_ENABLE_WAYLAND="1";
     GSK_RENDERER="ngl";
+    XDG_CURRENT_DESKTOP="Hyprland";
   };
 
   environment.variables = rec {
