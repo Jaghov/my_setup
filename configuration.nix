@@ -226,6 +226,8 @@
       # Editors
       vim 
       helix
+      # lsp's
+      nil
 
       # dunst #notification service
       # libnotify
