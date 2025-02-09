@@ -291,7 +291,7 @@
       cargo-modules
       clippy
       rust-analyzer
-      ncspot
+      # ncspot # music
       xwaylandvideobridge
       hyprland
       xdg-desktop-portal-hyprland
