@@ -14,30 +14,34 @@
     # };
   };
 
-  outputs = { self, nixpkgs , ... }@inputs:#nixpkgs-unstable 
-  let 
-    system = "x86_64-linux";
-    lib = nixpkgs.lib;
-    pkgs = nixpkgs.legacyPackages.${system};
-    # Configure `pkgs-unstable` similarly
-    # pkgs-unstable = import nixpkgs-unstable {
-    #   inherit system;
-    #   config = {
-    #     allowUnfree = true;
-    #   };
-    # };
-    
-    # pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
-  in
-  {
-    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-      specialArgs = {inherit inputs; inherit system;  }; #inherit pkgs-unstable;
-      modules = [
-        ./configuration.nix
-        {nixpkgs.overlays = [inputs.hyprpanel.overlay ];}
+  outputs =
+    { self, nixpkgs, ... }@inputs: # nixpkgs-unstable
+    let
+      system = "x86_64-linux";
+      lib = nixpkgs.lib;
+      pkgs = nixpkgs.legacyPackages.${system};
+      # Configure `pkgs-unstable` similarly
+      # pkgs-unstable = import nixpkgs-unstable {
+      #   inherit system;
+      #   config = {
+      #     allowUnfree = true;
+      #   };
+      # };
 
-        # inputs.home-manager.nixosModules.default
-      ];
+    in
+    # pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+    {
+      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+          inherit system;
+        }; # inherit pkgs-unstable;
+        modules = [
+          ./configuration.nix
+          { nixpkgs.overlays = [ inputs.hyprpanel.overlay ]; }
+
+          # inputs.home-manager.nixosModules.default
+        ];
+      };
     };
-  };
 }

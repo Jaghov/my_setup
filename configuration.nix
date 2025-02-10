@@ -4,33 +4,34 @@
 
 { config, pkgs, ... }:
 
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./modules/nvidia2.nix
-      ./modules/sound/default.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./modules/nvidia2.nix
+    ./modules/sound/default.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes"];
+  # boot.kernelPatches = [
+  #   {
+  #     name = "amdgpu-ignore-ctx-privileges";
+  #     patch = pkgs.fetchpatch {
+  #       name = "cap_sys_nice_begone.patch";
+  #       url = "https://github.com/Frogging-Family/community-patches/raw/master/linux61-tkg/cap_sys_nice_begone.mypatch";
+  #       hash = "sha256-Y3a0+x2xvHsfLax/uwycdJf3xLxvVfkfDVqjkxNaYEo=";
+  #     };
+  #   }
+  # ];
 
-# boot.kernelPatches = [
-#   {
-#     name = "amdgpu-ignore-ctx-privileges";
-#     patch = pkgs.fetchpatch {
-#       name = "cap_sys_nice_begone.patch";
-#       url = "https://github.com/Frogging-Family/community-patches/raw/master/linux61-tkg/cap_sys_nice_begone.mypatch";
-#       hash = "sha256-Y3a0+x2xvHsfLax/uwycdJf3xLxvVfkfDVqjkxNaYEo=";
-#     };
-#   }
-# ];  
-  
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -85,32 +86,32 @@
   #   flags = [
   #     "--update-input"
   #     "nixpkgs"
-  #     "-L" 
+  #     "-L"
   #   ];
   #   dates = "09:00";
   #   randomizedDelaySec = "45min";
   # };
   # program.nix-ld.enable = true;
   #programs.nix-ld.libraries = with pkgs; [
-    
+
   #];
-  
+
   systemd.user.services.plasma-dolphin = {
     unitConfig = {
-        Description = "Dolphin file manager";
-        PartOf = [ "graphical-session.target" ];
+      Description = "Dolphin file manager";
+      PartOf = [ "graphical-session.target" ];
     };
     path = [ "/run/current-system/sw" ];
     environment = {
-        # don't add this if you are not wayland
-        QT_QPA_PLATFORM = "wayland";
+      # don't add this if you are not wayland
+      QT_QPA_PLATFORM = "wayland";
     };
     serviceConfig = {
-        Type = "dbus";
-        BusName = "org.freedesktop.FileManager1";
-        ExecStart = "${pkgs.dolphin}/bin/dolphin";
+      Type = "dbus";
+      BusName = "org.freedesktop.FileManager1";
+      ExecStart = "${pkgs.dolphin}/bin/dolphin";
     };
-};
+  };
 
   # Enable bluetooth
   hardware.bluetooth.enable = true;
@@ -129,14 +130,17 @@
   # Bluetooth manager
   services.blueman.enable = true;
 
- # Handles desktop interactions
+  # Handles desktop interactions
   xdg = {
     portal = {
       enable = true;
       xdgOpenUsePortal = true;
       config = {
-        common.default = ["hyprland"];
-        hyprland.default = ["gtk" "hyprland"];
+        common.default = [ "hyprland" ];
+        hyprland.default = [
+          "gtk"
+          "hyprland"
+        ];
       };
       extraPortals = [
         pkgs.xdg-desktop-portal-gtk
@@ -144,7 +148,6 @@
       ];
     };
   };
-
 
   # Enable sound with pipewire.
   # hardware.pulseaudio = {
@@ -173,13 +176,16 @@
   users.users.dandy = {
     isNormalUser = true;
     description = "Joseph Aghoghovbia";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
       firefox
       # firefox-wayland
       tor-browser
       google-chrome
-    #  thunderbird
+      #  thunderbird
 
       libreoffice-qt6-fresh
       hunspell
@@ -200,15 +206,16 @@
   # nixpkgs-unstable.config.allowUnfree = true;
   nvidia.enable = true;
   noisetorch.enable = true;
-  # hardware.opentabletdriver.enable = true;
+  hardware.opentabletdriver.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = 
-    (with pkgs; [
+  environment.systemPackages = (
+    with pkgs;
+    [
       wget
       git
-      zip 
+      zip
 
       # C++
       gcc
@@ -224,10 +231,11 @@
       jetbrains.idea-ultimate
 
       # Editors
-      vim 
+      vim
       helix
       # lsp's
       nil
+      nixfmt-rfc-style
 
       # dunst #notification service
       # libnotify
@@ -241,8 +249,7 @@
       networkmanagerapplet
       pavucontrol
       blueman
-      
-    
+
       # Dev tooling
       nushell
       zellij
@@ -265,7 +272,7 @@
       # images
       gimp
       qimgv
-      grimblast #screenshots
+      grimblast # screenshots
       swappy
 
       testdisk
@@ -280,7 +287,6 @@
 
       # Image manipulation
       rerun
-      
 
       obsidian
       zotero
@@ -289,7 +295,7 @@
       rustc
       cargo
       rustfmt
-      
+
       cargo-modules
       clippy
       rust-analyzer
@@ -299,17 +305,17 @@
       xdg-desktop-portal-hyprland
       unzip
 
-
       hydra-check
       vdpauinfo
-    ])
-    
-    ;
-    fonts.packages = with pkgs; [
-      nerd-fonts.jetbrains-mono
-    ];
-    fonts.fontDir.enable = true;
-  
+    ]
+  )
+
+  ;
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+  ];
+  fonts.fontDir.enable = true;
+
   # Enabling hyprland on Nixos
   programs.hyprland = {
     enable = true;
@@ -322,23 +328,18 @@
     WLR_NO_HARDWARE_CURSORS = "1";
     # Hint electron apps to use wayland
     NIXOS_OZONE_WL = "1";
-    MOZ_ENABLE_WAYLAND="1";
-    GSK_RENDERER="ngl";
-    XDG_CURRENT_DESKTOP="Hyprland";
+    MOZ_ENABLE_WAYLAND = "1";
+    GSK_RENDERER = "ngl";
+    XDG_CURRENT_DESKTOP = "Hyprland";
   };
 
   environment.variables = rec {
     GRIMBLAST_EDITOR = "/run/current-system/sw/bin/swappy -f";
-    
-  };
 
+  };
 
   # services.xserver.videoDrivers = ["nvidia"];
 
-
-    
-
- 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -365,6 +366,5 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
-  
 
 }
