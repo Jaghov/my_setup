@@ -122,8 +122,10 @@
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
   };
-  programs.alvr.enable = true;
-  programs.alvr.openFirewall = true;
+
+  # Enable alvr
+  # programs.alvr.enable = true;
+  # programs.alvr.openFirewall = true;
 
   programs.xwayland.enable = true;
 
@@ -135,18 +137,27 @@
     portal = {
       enable = true;
       xdgOpenUsePortal = true;
-      config = {
-        common.default = [ "hyprland" ];
-        hyprland.default = [
-          "gtk"
-          "hyprland"
-        ];
-      };
-      extraPortals = [
-        pkgs.xdg-desktop-portal-gtk
-        pkgs.xdg-desktop-portal-hyprland
-      ];
+      # wlr.enable = true;
+      # config = {
+      #   common.default = [ "wlr" ];
+      #   hyprland.default = [
+      #     "wlr"
+      #     "gtk"
+      #     "hyprland"
+      #   ];
+      # };
+      # extraPortals = [
+      #   pkgs.xdg-desktop-portal-gtk
+      #   pkgs.xdg-desktop-portal-hyprland
+      #   pkgs.xdg-desktop-portal-wlr
+      # ];
     };
+  };
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+    portalPackage = pkgs.xdg-desktop-portal-hyprland;
+    # enableNvidiaPatches = true;
   };
 
   # Enable sound with pipewire.
@@ -266,7 +277,7 @@
       vesktop
       steam
       itch
-      alvr
+      # alvr
       qbittorrent
 
       # images
@@ -317,12 +328,6 @@
   fonts.fontDir.enable = true;
 
   # Enabling hyprland on Nixos
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-    portalPackage = pkgs.xdg-desktop-portal-hyprland;
-    # enableNvidiaPatches = true;
-  };
   environment.sessionVariables = {
     # If cursor becomes invisible
     WLR_NO_HARDWARE_CURSORS = "1";
