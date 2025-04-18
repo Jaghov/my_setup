@@ -63,6 +63,7 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.excludePackages = [ pkgs.xterm ];
 
   # Enable the GNOME Desktop Environment.
   # services.xserver.displayManager.gdm.enable = true;
@@ -109,7 +110,7 @@
     serviceConfig = {
       Type = "dbus";
       BusName = "org.freedesktop.FileManager1";
-      ExecStart = "${pkgs.dolphin}/bin/dolphin";
+      ExecStart = "${pkgs.kdePackages.dolphin}/bin/dolphin";
     };
   };
 
@@ -133,31 +134,30 @@
   services.blueman.enable = true;
 
   # Handles desktop interactions
-  xdg = {
-    portal = {
-      enable = true;
-      xdgOpenUsePortal = true;
-      # wlr.enable = true;
-      # config = {
-      #   common.default = [ "wlr" ];
-      #   hyprland.default = [
-      #     "wlr"
-      #     "gtk"
-      #     "hyprland"
-      #   ];
-      # };
-      # extraPortals = [
-      #   pkgs.xdg-desktop-portal-gtk
-      #   pkgs.xdg-desktop-portal-hyprland
-      #   pkgs.xdg-desktop-portal-wlr
-      # ];
-    };
-  };
+  # xdg = {
+  #   portal = {
+  #     enable = true;
+  #     xdgOpenUsePortal = true;
+  #     # wlr.enable = true;
+  #     # config = {
+  #     #   common.default = [ "wlr" ];
+  #     #   hyprland.default = [
+  #     #     "wlr"
+  #     #     "gtk"
+  #     #     "hyprland"
+  #     #   ];
+  #     # };
+  #     # extraPortals = [
+  #     #   pkgs.xdg-desktop-portal-gtk
+  #     #   pkgs.xdg-desktop-portal-hyprland
+  #     #   pkgs.xdg-desktop-portal-wlr
+  #     # ];
+  #   };
+  # };
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
     portalPackage = pkgs.xdg-desktop-portal-hyprland;
-    # enableNvidiaPatches = true;
   };
 
   # Enable sound with pipewire.
@@ -193,14 +193,15 @@
     ];
     packages = with pkgs; [
       firefox
+      vivaldi
       # firefox-wayland
       tor-browser
       google-chrome
       #  thunderbird
 
-      libreoffice-qt6-fresh
-      hunspell
-      hunspellDicts.en_GB-ise
+      # libreoffice-qt6-fresh
+      # hunspell
+      # hunspellDicts.en_GB-ise
     ];
   };
 
@@ -231,15 +232,15 @@
       # C++
       gcc
       usbutils
-      jetbrains.clion
+      # jetbrains.clion
 
       # Python
-      python310
+      # python310
       vscode
 
       # Java
       jdk21_headless
-      jetbrains.idea-ultimate
+      # jetbrains.idea-ultimate
 
       # Editors
       vim
@@ -252,7 +253,7 @@
       # libnotify
       kitty
       rofi-wayland
-      dolphin
+      kdePackages.dolphin
       hyprpanel
       hyprland-qtutils
 
@@ -286,7 +287,6 @@
       grimblast # screenshots
       swappy
 
-      testdisk
 
       # Blender
       blender
@@ -311,13 +311,15 @@
       clippy
       rust-analyzer
       # ncspot # music
-      xwaylandvideobridge
+      kdePackages.xwaylandvideobridge
       hyprland
       xdg-desktop-portal-hyprland
       unzip
 
-      hydra-check
-      vdpauinfo
+      ## System Diagnostic tools
+      #chntpw
+      # hydra-check
+      # vdpauinfo
     ]
   )
 
