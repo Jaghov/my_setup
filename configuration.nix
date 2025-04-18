@@ -134,38 +134,12 @@
   services.blueman.enable = true;
 
   # Handles desktop interactions
-  # xdg = {
-  #   portal = {
-  #     enable = true;
-  #     xdgOpenUsePortal = true;
-  #     # wlr.enable = true;
-  #     # config = {
-  #     #   common.default = [ "wlr" ];
-  #     #   hyprland.default = [
-  #     #     "wlr"
-  #     #     "gtk"
-  #     #     "hyprland"
-  #     #   ];
-  #     # };
-  #     # extraPortals = [
-  #     #   pkgs.xdg-desktop-portal-gtk
-  #     #   pkgs.xdg-desktop-portal-hyprland
-  #     #   pkgs.xdg-desktop-portal-wlr
-  #     # ];
-  #   };
-  # };
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
     portalPackage = pkgs.xdg-desktop-portal-hyprland;
   };
 
-  # Enable sound with pipewire.
-  # hardware.pulseaudio = {
-  #   enable = true;
-  #   support32Bit = true;
-  # };
-  # hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
