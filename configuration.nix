@@ -294,6 +294,7 @@
       #chntpw
       # hydra-check
       # vdpauinfo
+      ntfs3g
     ]
   )
 
