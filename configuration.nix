@@ -2,14 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./modules/nvidia2.nix
-    ./modules/sound/default.nix
+    ./modules/hardware/nvidia.nix
+    ./modules/services/sound/default.nix
   ];
 
   # Bootloader.
@@ -168,14 +168,8 @@
     packages = with pkgs; [
       firefox
       vivaldi
-      # firefox-wayland
       tor-browser
       google-chrome
-      #  thunderbird
-
-      # libreoffice-qt6-fresh
-      # hunspell
-      # hunspellDicts.en_GB-ise
     ];
   };
 
@@ -245,10 +239,6 @@
       # Leisure
       mpv
       teams-for-linux
-      # (discord.override {
-      #   # withOpenASAR = true; # can do this here too
-      #   withVencord = true;
-      # })
       vesktop
       steam
       itch
@@ -291,7 +281,7 @@
       unzip
 
       ## System Diagnostic tools
-      #chntpw
+      # chntpw
       # hydra-check
       # vdpauinfo
       ntfs3g
