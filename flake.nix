@@ -4,14 +4,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
-    # hyprland-qtutils.url = "github:hyprwm/hyprland-qtutils";
-
-    # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    # home-manager = {
-    #   url = "github:nix-community/home-manager";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
   };
 
   outputs =
@@ -20,18 +12,10 @@
       system = "x86_64-linux";
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${system};
-      # Configure `pkgs-unstable` similarly
-      # pkgs-unstable = import nixpkgs-unstable {
-      #   inherit system;
-      #   config = {
-      #     allowUnfree = true;
-      #   };
-      # };
 
     in
-    # pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
     {
-      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.default = lib.nixosSystem {
         specialArgs = {
           inherit inputs;
           inherit system;
