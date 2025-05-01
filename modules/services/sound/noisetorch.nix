@@ -8,7 +8,7 @@
 {
   ###### interface
   options = {
-    noisetorch.enable = lib.mkEnableOption "noisetorch";
+    noisetorch.enable = lib.mkEnableOption "enables noisetorch"; # initialise config option for noisetorch
   };
 
   config = lib.mkIf config.noisetorch.enable {

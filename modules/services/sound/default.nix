@@ -8,10 +8,14 @@
 {
   ###### interface
   imports = [
-    "./noisetorch.nix"
+    ./noisetorch.nix
   ];
+  options = {
+    vol_control.enable = lib.mkEnableOption "Enables Audio control";
+  }; 
 
   noisetorch.enable = true;
+  environment.systemPackages = lib.mkIf config.vol_control.enable [pkgs.pavucontrol];
   services.pipewire = {
     enable = true;
     alsa.enable = true;

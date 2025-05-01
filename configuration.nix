@@ -8,9 +8,13 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./modules/hardware/nvidia.nix
-    ./modules/services/sound/default.nix
+    ./modules/hardware/default.nix
+    ./modules/services/default.nix
+    ./modules/userland/dandy.nix
   ];
+
+  vol_control.enable = false;
+  steam.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -20,17 +24,6 @@
     "nix-command"
     "flakes"
   ];
-
-  # boot.kernelPatches = [
-  #   {
-  #     name = "amdgpu-ignore-ctx-privileges";
-  #     patch = pkgs.fetchpatch {
-  #       name = "cap_sys_nice_begone.patch";
-  #       url = "https://github.com/Frogging-Family/community-patches/raw/master/linux61-tkg/cap_sys_nice_begone.mypatch";
-  #       hash = "sha256-Y3a0+x2xvHsfLax/uwycdJf3xLxvVfkfDVqjkxNaYEo=";
-  #     };
-  #   }
-  # ];
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -61,9 +54,6 @@
     LC_TIME = "en_GB.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.excludePackages = [ pkgs.xterm ];
 
   # Enable the GNOME Desktop Environment.
   # services.xserver.displayManager.gdm.enable = true;
@@ -114,64 +104,13 @@
     };
   };
 
-  # Enable bluetooth
-  hardware.bluetooth.enable = true;
 
-  # Enable steam
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-  };
-
-  # Enable alvr
-  # programs.alvr.enable = true;
-  # programs.alvr.openFirewall = true;
-
-  programs.xwayland.enable = true;
-
-  # Bluetooth manager
-  services.blueman.enable = true;
-
-  # Handles desktop interactions
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-    portalPackage = pkgs.xdg-desktop-portal-hyprland;
-  };
 
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    wireplumber.enable = true;
-  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.dandy = {
-    isNormalUser = true;
-    description = "Joseph Aghoghovbia";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
-    packages = with pkgs; [
-      firefox
-      vivaldi
-      tor-browser
-      google-chrome
-    ];
-  };
 
   # Enable automatic login for the user.
   services.displayManager.autoLogin.enable = true;
@@ -183,10 +122,6 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  # nixpkgs-unstable.config.allowUnfree = true;
-  nvidia.enable = true;
-  noisetorch.enable = true;
-  hardware.opentabletdriver.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -218,7 +153,6 @@
       nixfmt-rfc-style
 
       # dunst #notification service
-      # libnotify
       kitty
       rofi-wayland
       kdePackages.dolphin
@@ -227,8 +161,6 @@
 
       #System utilities
       networkmanagerapplet
-      pavucontrol
-      blueman
 
       # Dev tooling
       nushell
@@ -242,7 +174,6 @@
       vesktop
       steam
       itch
-      # alvr
       qbittorrent
 
       # images
@@ -263,7 +194,6 @@
       # Image manipulation
       rerun
 
-      obsidian
       zotero
       # Rust
       lldb
@@ -310,7 +240,6 @@
 
   };
 
-  # services.xserver.videoDrivers = ["nvidia"];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
