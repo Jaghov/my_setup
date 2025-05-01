@@ -10,4 +10,5 @@
   blueman.enable = lib.mkDefault true;
 
   noisetorch.enable = lib.mkDefault false;
+  vol_control.enable = lib.mkDefault true;
 }

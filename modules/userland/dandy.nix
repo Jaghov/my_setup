@@ -2,7 +2,7 @@
 {
 
   imports = [
-    ./programs.nix
+    # ./programs.nix
     ./steam.nix
   ];
 

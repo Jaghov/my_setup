@@ -2,15 +2,20 @@
 
 {
   options = {
-    bluethooth.enable = lib.mkEnableOption "Enables bluetooth";
-    blueman.enable = lib.mkEnableOption "Adds bluethooth manager";
+    bluetooth.enable = lib.mkEnableOption "Enables bluetooth";
+    blueman.enable = lib.mkEnableOption "Adds bluetooth manager";
   };
   
-  config = lib.mkIf config.bluetooth.enable ({
-    hardware.bluetooth.enable = true;
-  } // lib.mkIf config.blueman.enable {
-    environment.systemPackages = [ pkgs.blueman ];
-    services.blueman.enable = true;
-  });
+    config = lib.mkMerge [
+    (lib.mkIf config.bluetooth.enable {
+      hardware.bluetooth.enable = true;
+    })
+
+    (lib.mkIf (config.bluetooth.enable && config.blueman.enable) {
+      environment.systemPackages = [ pkgs.blueman ];
+      services.blueman.enable = true;
+    })
+  ];
+ 
 
 }

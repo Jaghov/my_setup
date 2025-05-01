@@ -13,7 +13,6 @@
     ./modules/userland/dandy.nix
   ];
 
-  vol_control.enable = false;
   steam.enable = true;
 
   # Bootloader.
@@ -237,7 +236,8 @@
 
   environment.variables = rec {
     GRIMBLAST_EDITOR = "/run/current-system/sw/bin/swappy -f";
-
+    EDITOR = "/run/current-system/sw/bin/hx";
+    SUDO_EDITOR = "/run/current-system/sw/bin/hx";
   };
 
 
