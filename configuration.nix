@@ -130,6 +130,7 @@
       wget
       git
       zip
+      wl-clipboard
 
       # C++
       gcc
@@ -139,6 +140,7 @@
       # Python
       # python310
       vscode
+      godot
 
       # Java
       jdk21_headless
@@ -153,10 +155,7 @@
 
       # dunst #notification service
       kitty
-      rofi-wayland
       kdePackages.dolphin
-      hyprpanel
-      hyprland-qtutils
 
       #System utilities
       networkmanagerapplet
@@ -172,7 +171,7 @@
       teams-for-linux
       vesktop
       steam
-      itch
+      # itch
       qbittorrent
 
       # images
@@ -194,19 +193,8 @@
       rerun
 
       zotero
-      # Rust
-      lldb
-      rustc
-      cargo
-      rustfmt
-
-      cargo-modules
-      clippy
-      rust-analyzer
       # ncspot # music
       kdePackages.xwaylandvideobridge
-      hyprland
-      xdg-desktop-portal-hyprland
       unzip
 
       ## System Diagnostic tools
@@ -218,22 +206,7 @@
   )
 
   ;
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-  ];
-  fonts.fontDir.enable = true;
-
-  # Enabling hyprland on Nixos
-  environment.sessionVariables = {
-    # If cursor becomes invisible
-    WLR_NO_HARDWARE_CURSORS = "1";
-    # Hint electron apps to use wayland
-    NIXOS_OZONE_WL = "1";
-    MOZ_ENABLE_WAYLAND = "1";
-    GSK_RENDERER = "ngl";
-    XDG_CURRENT_DESKTOP = "Hyprland";
-  };
-
+ 
   environment.variables = rec {
     GRIMBLAST_EDITOR = "/run/current-system/sw/bin/swappy -f";
     EDITOR = "/run/current-system/sw/bin/hx";
