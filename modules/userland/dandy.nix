@@ -15,6 +15,8 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "tty"
+      "dialout"
     ];
     packages = with pkgs; [
       firefox
@@ -22,6 +24,7 @@
       tor-browser
       google-chrome
       obsidian
+
     ];
   };
 }

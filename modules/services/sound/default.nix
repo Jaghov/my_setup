@@ -34,7 +34,8 @@
             # check https://pipewire.pages.freedesktop.org/wireplumber/daemon/configuration.html for more info
             # and https://www.reddit.com/r/archlinux/comments/190dvl8/pipewirewayland_how_to_stop_applications_from/ for the source
             # of this fix
-            matches = [ { application.process.binary = "electron"; } ];
+            matches = [ { application.process.binary = "electron"; }
+             { application.process.binary = "vencord"; }];
             actions = { update-props = { default_permissions = "rx"; }; };
           }
             

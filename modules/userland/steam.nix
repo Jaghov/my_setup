@@ -15,5 +15,6 @@
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = true;
     };
+    hardware.steam-hardware.enable = true;
   };
 }

@@ -69,7 +69,7 @@
       enable = true;
       enable32Bit = true;
       extraPackages = with pkgs; [
-        vaapiVdpau
+        libva-vdpau-driver
         libvdpau-va-gl
         libva-vdpau-driver
         nvidia-vaapi-driver # Fix for firefox hardware acceleration with nvidia

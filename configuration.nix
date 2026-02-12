@@ -18,10 +18,34 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
+  ];
+
+  programs.nix-ld.enable = true;
+
+  programs.nix-ld.libraries = with pkgs; [
+    # Add any missing dynamic libraries for unpackaged programs
+    # here, NOT in environment.systemPackages
+    zlib
+    libgcc
+    icu
+    fontconfig
+    freetype
+
+    # X11 session / IPC (THIS fixes libICE.so.6)
+    xorg.libICE
+    xorg.libSM
+    
+    xorg.libX11
+    xorg.libXcursor
+    xorg.libXrandr
+    xorg.libXinerama
+    xorg.libXi
+    xorg.libXext
   ];
 
   networking.hostName = "nixos"; # Define your hostname.
@@ -35,8 +59,8 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  # time.timeZone = "Europe/London";
-  time.timeZone = "Africa/Lagos";
+  time.timeZone = "Europe/London";
+  # time.timeZone = "Africa/Lagos";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
@@ -170,13 +194,15 @@
       mpv
       teams-for-linux
       vesktop
-      steam
+      # steam
+      protontricks
       # itch
       qbittorrent
 
       # images
       gimp
       qimgv
+      obs-studio
       grimblast # screenshots
       swappy
 
@@ -193,9 +219,17 @@
       rerun
 
       zotero
-      # ncspot # music
-      kdePackages.xwaylandvideobridge
+      ncspot # music
+      # kdePackages.xwaylandvideobridge
       unzip
+
+
+      # IOS connect
+      idescriptor
+      # libimobiledevice
+      # ifuse # optional, to mount using 'ifuse'
+
+
 
       ## System Diagnostic tools
       # chntpw
@@ -224,8 +258,19 @@
 
   # List services that you want to enable:
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+   # Enable the OpenSSH daemon.
+   services.openssh.enable = true;
+  
+  networking.firewall = {
+  enable = false;
+
+  allowedTCPPortRanges = [
+    { from = 30000; to = 60000; }
+  ];
+  allowedUDPPortRanges = [
+    { from = 30000; to = 60000; }
+  ];
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

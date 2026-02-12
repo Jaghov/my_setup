@@ -2,11 +2,11 @@
 {
 
   users.users.dandy.packages = with pkgs; [
-    kdePackages.xwaylandvideobridge
+    # kdePackages.xwaylandvideobridge
     hyprland
     hyprpanel
     hyprland-qtutils
-    rofi-wayland
+    rofi
   ];
   
   programs.xwayland.enable = true;
