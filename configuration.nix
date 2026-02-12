@@ -226,6 +226,7 @@
 
       # IOS connect
       idescriptor
+      avahi
       # libimobiledevice
       # ifuse # optional, to mount using 'ifuse'
 
