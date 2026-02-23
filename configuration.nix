@@ -37,15 +37,15 @@
     freetype
 
     # X11 session / IPC (THIS fixes libICE.so.6)
-    xorg.libICE
-    xorg.libSM
+    libICE
+    libSM
     
-    xorg.libX11
-    xorg.libXcursor
-    xorg.libXrandr
-    xorg.libXinerama
-    xorg.libXi
-    xorg.libXext
+    libX11
+    libXcursor
+    libXrandr
+    libXinerama
+    libXi
+    libXext
   ];
 
   networking.hostName = "nixos"; # Define your hostname.
@@ -227,7 +227,7 @@
       # IOS connect
       idescriptor
       avahi
-      # libimobiledevice
+      libimobiledevice
       # ifuse # optional, to mount using 'ifuse'
 
 
