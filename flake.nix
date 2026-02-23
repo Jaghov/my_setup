@@ -27,7 +27,6 @@
         }; # inherit pkgs-unstable;
         modules = [
           ./configuration.nix
-          # { nixpkgs.overlays = [ inputs.hyprpanel.overlay ]; }
 
           # inputs.home-manager.nixosModules.default
         ];

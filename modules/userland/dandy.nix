@@ -6,7 +6,7 @@
     ./steam.nix
   ];
 
-  # steam.enable = lib.mkDefault false;
+  steam.enable = lib.mkDefault false;
   
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.dandy = {

@@ -13,7 +13,7 @@
     ./modules/userland/dandy.nix
   ];
 
-  steam.enable = true;
+  steam.enable = false;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -175,7 +175,7 @@
       helix
       # lsp's
       nil
-      nixfmt-rfc-style
+      nixfmt
 
       # dunst #notification service
       kitty
@@ -194,7 +194,7 @@
       mpv
       teams-for-linux
       vesktop
-      # steam
+
       protontricks
       # itch
       qbittorrent
