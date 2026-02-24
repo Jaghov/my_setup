@@ -24,6 +24,7 @@
       tor-browser
       google-chrome
       obsidian
+      xournalpp
 
     ];
   };
