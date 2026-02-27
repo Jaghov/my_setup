@@ -215,8 +215,6 @@
       libva
       libva-utils
 
-      # Image manipulation
-      rerun
 
       zotero
       ncspot # music
