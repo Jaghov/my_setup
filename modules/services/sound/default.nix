@@ -11,10 +11,11 @@
     ./noisetorch.nix
   ];
   options = {
-    vol_control.enable = lib.mkEnableOption "Enables Audio control";
+    rocksmith.enable = lib.mkEnableOption "Enables Audio control";
   }; 
 
   config = {
+    users.users."dandy".extraGroups = lib.mkIf config.rocksmith.enable ["audio" "rtkit"];
     services.pipewire = {
       enable = true;
       alsa.enable = true;
@@ -45,7 +46,10 @@
         
       };
     };
-    environment.systemPackages = lib.mkIf config.vol_control.enable [ pkgs.pavucontrol ];
+    environment.systemPackages = lib.mkIf config.rocksmith.enable [
+      pkgs.crosspipe
+      pkgs.rtaudio
+    ];
     
   };
 

@@ -3,6 +3,15 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # # A flake providing necessary module `programs.steam.rocksmithPatch`
+    nixos-rocksmith = {
+      url = "github:re1n0/nixos-rocksmith";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -27,6 +36,9 @@
         }; # inherit pkgs-unstable;
         modules = [
           ./configuration.nix
+          #rocksmith module
+          inputs.nixos-rocksmith.nixosModules.default
+          inputs.nix-index-database.nixosModules.default
 
           # inputs.home-manager.nixosModules.default
         ];

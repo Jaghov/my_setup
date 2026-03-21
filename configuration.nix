@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }:
+{ inputs, pkgs, system, ... }:
 
 {
   imports = [
@@ -13,7 +13,9 @@
     ./modules/userland/dandy.nix
   ];
 
-  steam.enable = false;
+  steam.enable = true;
+  rocksmith.enable = true;
+  # win32 bit overlay to fix that version no longer being built for rocksmith
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -164,7 +166,9 @@
       # Python
       # python310
       vscode
-      godot
+      cursor-cli
+      # godot
+      claude-code
 
       # Java
       jdk21_headless
@@ -214,6 +218,8 @@
       ffmpeg_7-full
       libva
       libva-utils
+
+      gamemode
 
 
       zotero

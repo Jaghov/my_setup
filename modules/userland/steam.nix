@@ -14,6 +14,8 @@
       enable = true;
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = true;
+      rocksmithPatch.enable = true;
+      extraPackages = with pkgs; [ wineasio gamemode ]; # Adds wineasio
     };
     hardware.steam-hardware.enable = true;
   };
